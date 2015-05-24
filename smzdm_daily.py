@@ -40,10 +40,10 @@ class SMZDMDaily(object):
         r = self.session.get(self.BASE_URL, headers=headers)
         
         # 处理值得买防爬虫机制
-        if r.status_code == 521:
+        if r.status_code == 200:
             # find cookie
             m = re.findall(r'push\("([^"]+)"\)', r.text)
-            cookies = dict(__jsl_clearance=''.join(m))
+            cookies = dict(__jsluid=''.join(m))
             r = self.session.get(self.LOGIN_URL, params=params, cookies=cookies, headers=headers)
 
         if r.status_code != 200:
